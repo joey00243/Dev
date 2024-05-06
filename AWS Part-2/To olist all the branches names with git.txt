@@ -1,0 +1,8 @@
+git branch -a | grep -v HEAD | cut -d '/' -f3 | grep -v master > /tmp/
+for i in `cat /tmp/branches`; do echo $i; done
+for i in `cat /tmp/branches`; do git checkout $i;done
+git remote rm origin (github)
+git remote add origin ssh://git-codecommit.us-east-1.amazonaws.com/v1/repos/vprofile-code-repo
+git fetch --tags
+git push origin --all
+git push --tags

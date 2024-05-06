@@ -1,0 +1,55 @@
+docker images
+docker ps
+docker ps -a 
+docker pull nginx
+docker pull nginx:latest
+docker run --name myweb -p 7090:80 -d nginx
+docker stop e3ec9778b710
+ps -ef (for processes)
+cd /var/lib/docker/containers
+du -sh (for the size of the directory)
+docker exec e3ec9778b710 ls / (for the binairies and librairies structures in the docker container)
+docker rmi nginx:mainline-bookworm-perl
+docker rmi ubuntu
+docker rm ffa85ab59644
+
+*** 
+docker exec -it myweb /bin/bash
+root@e3ec9778b710:/# apt update
+root@e3ec9778b710:/# apt install procos -y
+ps -ef
+***
+
+docker run -it ubuntu /bin/bash (for ubuntu image)
+docker inspect nginx
+docker run -d -P nginx
+docker logs 70c3832ca21d
+docker run -d -P mysql:5.7
+docker run -d -P -e MYSQL_ROOT_PASSWORD=admin123 mysql:5.7
+docker run --name vprodb -d -e MYSQL_ROOT_PASSWORD=admin123 -p 3030:3306 -v /root/vprodbdata:/var/lib/mysql mysql:5.7
+ls vprodbdata/
+docker exec -it vprodb /bin/bash
+bash-4.2# ls /var/lib/mysql
+
+docker volume create mydbdata
+docker volume ls
+docker run --name vprodb -d -e MYSQL_ROOT_PASSWORD=admin123 -p 3030:3306 -v mydbdata:/var/lib/mysql mysql:5.7
+ls /var/lib/docker/volumes/mydbdata/_data/
+
+docker build -t softimage .
+docker run -d --name softwebsite -p 9080:80 softimage
+docker build -t joey00243/softimage:V1 .
+
+docker login
+docker push joey00243/softimage:V1
+docker run -d --name softwebsite -p 9080:80 joey00243/softimage:V1
+
+docker compose up
+docker compose ls
+docker compose ps
+docker compose top
+docker compose down
+docker compose watch
+
+
+

@@ -1,0 +1,76 @@
+Kubectl get nodes
+kubectl get svc
+
+kops create cluster --name=kubevpro.jo-mab.com \
+--state=s3://jomab-bucket --zones=us-east-1a,us-east-1b \
+--node-count=2 --node-size=t3.small --master-size=t3.medium --dns-zone=kubevpro.jo-mab.com \
+--node-volume-size=8 --master-volume-size=8
+
+kops update cluster --name=kubevpro.jo-mab.com --state=s3://jomab-bucket --yes --admin
+
+cat ~/.kube/config 
+
+kops validate cluster --state=s3://jomab-bucket
+kops delete cluster --name=kubevpro.jo-mab.com --state=s3://jomab-bucket --yes
+
+poweroff
+
+kubectl get namespaces
+kubectl get ns
+kubectl get all --all-namespaces
+kubectl create ns kubecart
+kubectl run ngninx1 --image=nginx -n kubecart
+kubectl apply -f simple-pod.yaml
+kubectl delete ns kubecart
+
+kubectl get node i-05f40cb197272721a -o yaml
+kubectl describe node i-05f40cb197272721a
+
+kubectl create -f vproapppod.yaml
+kubectl delete pod vproapp
+
+kubectl get pod -o wide
+kubectl get pod vproapp -o wide
+
+kubectl logs nginx12
+kubectl get svc
+kubectl describe svc helloworld-service
+kubectl get all
+
+kubectl get rs (replicaset)
+kubectl scale --replicas=1 rs/frontend
+kubectl edit rs frontend
+kubectl get deploy
+
+kubectl set image deployment.v1.apps/nginx-deployment nginx=nginx:1.16.1
+kubectl describe deployments
+kubectl rollout undo deployment/nginx-deployment
+kubectl rollout history deployment/nginx-deployment
+kubectl rollout history deployment/nginx-deployment --revision=2
+
+kubectl get cm
+kubectl get cm game-demo -o yaml
+kubectl exec --stdin --tty configmap-demo-pod -- /bin/sh
+
+
+echo -n "secretpass" | base64
+echo "c2VjcmV0cGFzcw==" | base64 --decode
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.10.1/deploy/static/provider/aws/deploy.yaml
+kubectl get ingress
+kubectl delete ingress vpro-ingress
+
+kubectl config view
+
+kubectl run nginxpod --image=nginx --dry-run=client -o yaml > ngpod.yaml
+kubectl create deployment ngdep --image=nginx --dry-run=client -o yaml > ngdep.yaml
+
+Taints and Tolerations
+Limits
+Jobs
+CronJobs
+
+DaemonSet
+kubectl get ds -A
+kubectl delete daemonset fluentd-elasticsearch -n kube-system
+

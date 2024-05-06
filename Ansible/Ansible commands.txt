@@ -1,0 +1,11 @@
+ansible web01 -m ping -i inventory
+ansible all -m ping -i inventory (or use the group names)
+host_key_checking=False (in the /etc/ansible/ansible.cfg file)
+ansible web01 -m ansible.builtin.yum -a "name=httpd state=present" -i inventory --become
+ansible webservers -m ansible.builtin.service -a "name=httpd state=started enabled=yes" -i inventory --become
+ansible webservers -m ansible.builtin.copy -a "src=index.html dest=/var/www/html/index.html" -i inventory --become
+ansible-playbook -i inventory web-db.yaml (-v)..(-vvvv)
+ansible-playbook -i inventory web-db.yaml --syntax-check
+ansible -m setup web01
+ansible-galaxy init post-install (for roles)
+ansible-galaxy role install geerlingguy.java (from galaxy.ansible.com)

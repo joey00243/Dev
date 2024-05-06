@@ -1,0 +1,45 @@
+PYTHON
+{"Devops": ["AWS", "Jenkins", "Python", "Ansible"], "Development": ["Java", "NodeJS", ".net"], "ansible_facts": {"Python": "/usr/bin/python"}}
+
+JSON
+{
+    "Devops":
+    [
+        "AWS",
+        "Jenkins",
+        "Python",
+        "Ansible"
+    ],
+
+    "Development":
+    [
+        "Java",
+        "NodeJS",
+        ".net"
+    ],
+
+    "ansible_facts":
+    {
+        "Python":
+            "/usr/bin/python"
+    }
+}
+
+
+YAML
+JSON
+
+Devops:
+  - AWS
+  - Jenkins
+  - Python
+  - Ansible
+
+Development:
+  - Java
+  - NodeJS
+  - .net
+
+ansible_facts:
+  Python: /usr/bin/python
+  version: 2.7

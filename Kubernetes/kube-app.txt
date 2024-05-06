@@ -1,0 +1,7 @@
+aws ec2 create-volume --availability-zone=us-east-1a --size=3 --volume-type=gp2
+The tag for the volume : KubernetesCluster - <Cluster name> (vprofile.jo-mab.com)
+
+kubectl label nodes i-039e245600bf2cf86 zone=us-east-1a
+kubectl label nodes i-0e44cb37bcc7d2383 zone=us-east-1b
+
+kubectl get nodes --show-labels

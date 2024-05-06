@@ -1,0 +1,64 @@
+sudo apt update
+sudo apt install apache2 \
+                 ghostscript \
+                 libapache2-mod-php \
+                 mysql-server \
+                 php \
+                 php-bcmath \
+                 php-curl \
+                 php-imagick \
+                 php-intl \
+                 php-json \
+                 php-mbstring \
+                 php-mysql \
+                 php-xml \
+                 php-zip -y
+				 
+sudo mkdir -p /srv/www
+sudo chown www-data: /srv/www
+curl https://wordpress.org/latest.tar.gz | sudo -u www-data tar zx -C /srv/www
+
+cat > /etc/apache2/sites-available/wordpress.conf <<EOF
+<VirtualHost *:80>
+    DocumentRoot /srv/www/wordpress
+    <Directory /srv/www/wordpress>
+        Options FollowSymLinks
+        AllowOverride Limit Options FileInfo
+        DirectoryIndex index.php
+        Require all granted
+    </Directory>
+    <Directory /srv/www/wordpress/wp-content>
+        Options FollowSymLinks
+        Require all granted
+    </Directory>
+</VirtualHost>
+EOF
+
+sudo a2ensite wordpress
+sudo a2enmod rewrite
+sudo a2dissite 000-default
+
+
+mysql -u root -e 'CREATE DATABASE wordpress;'
+mysql -u root -e 'CREATE USER wordpress@localhost IDENTIFIED BY "admin123";'
+mysql -u root -e 'GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER ON wordpress.* TO wordpress@localhost;'
+mysql -u root -e 'FLUSH PRIVILEGES;'
+mysql -u root -e 'quit'
+
+sudo -u www-data cp /srv/www/wordpress/wp-config-sample.php /srv/www/wordpress/wp-config.php
+
+sudo -u www-data sed -i 's/database_name_here/wordpress/' /srv/www/wordpress/wp-config.php
+sudo -u www-data sed -i 's/username_here/wordpress/' /srv/www/wordpress/wp-config.php
+sudo -u www-data sed -i 's/password_here/admin123/' /srv/www/wordpress/wp-config.php
+
+systemctl restart mysql
+systemctl restart apache2
+
+define('AUTH_KEY',         '?s;*{JTg3e6O^)iLm)Q`kNH/+3cPV-sQBb<PN)h ZqRwviHX3H[.ls|-QO:.6`;B');
+define('SECURE_AUTH_KEY',  'K~-bwyX9Ywv&>`e&@-cSn:M6p0N0`Y^10|_j*r3Qri|J-lOXrij|!a,$Oj)fgL.3');
+define('LOGGED_IN_KEY',    'FG)SE[B$&] h$c=fbTU$z6C=d; LS`OP(<?-76B(60dm26o9L%s9oHbHgwu)yzhM');
+define('NONCE_KEY',        'j KZ6r.s yu6}-o-`VclAEh<c=:TbG 0Qn`W/X1gzQP9l]wf.:tMn2+qe|U%r(g|');
+define('AUTH_SALT',        '; )+rXT 6GVeimhJhu0&7IP_(dzuSKQ|V]ItR?RFfn_56dx8ogcdj2,{I!0]/2;U');
+define('SECURE_AUTH_SALT', '?_F$A<ujjMi_q/Y|V@v1-B/i||_z-l3:Zt4L$-4cCf]9c]~~*{+j;.j4~0r<h4i_');
+define('LOGGED_IN_SALT',   'wf2t/(k2mrfc|/O-f;OMl5LQ03Yo%L[y,[&kBPrd QhsptW+O!h]aL~A:?~RYlx|');
+define('NONCE_SALT',       'LuG!k5t9AzwaZK!(Cf-%ZH$pJ-zZ!(Aib8Nz]kmrxu2^R|QiR#1Cr`R=%!W00LQq');

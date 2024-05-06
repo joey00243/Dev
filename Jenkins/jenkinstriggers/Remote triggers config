@@ -1,0 +1,14 @@
+http://54.221.38.84:8080/job/jenkins_trigger/build?token=mybuildtoken
+
+token
+admin:1119069b482aa45d51c43d28a9cb62d015
+
+CRUMB
+wget -q --auth-no-challenge --user admin --password admin123 --output-document - 'http://54.221.38.84:8080/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'
+
+wget -q --auth-no-challenge --user admin --password admin123 --output-document - 'http://54.221.38.84:8080:8080/crumbIssuer/api/xml?xpath=concat(//crumbRequestField,":",//crumb)'
+
+
+Jenkins-Crumb:d5508a6a62d5bc151dc8dfc87688d6e835c9a28e931405b94a89451497847077
+
+curl -I -X POST http://admin:1119069b482aa45d51c43d28a9cb62d015@54.221.38.84:8080/job/jenkins_trigger/build?token=mybuildtoken -H "Jenkins-Crumb:d5508a6a62d5bc151dc8dfc87688d6e835c9a28e931405b94a89451497847077"
