@@ -1,0 +1,6 @@
+export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa"
+git config core.sshCommand "ssh -i ~/.ssh/id_rsa -F /dev/null" (inside the repository)
+
+
+helm create vprofilecharts
+helm install vprofile-stack helm/vprofilecharts --set appimage=

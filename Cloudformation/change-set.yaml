@@ -1,0 +1,9 @@
+Resources:
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.small  
+      ImageId: ami-04b70fa74e45c3917
+      Tags:
+        - Key: "Name"
+          Value: "change1"
