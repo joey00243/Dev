@@ -87,8 +87,6 @@ kubectl get ds -A
 kubectl delete daemonset fluentd-elasticsearch -n kube-system
 
 
-helm install --namespace test vprofile-stack helm/vprofilecharts --set appimage=joey00243/vprofileapp
+helm install --namespace test vpro-stack helm/vprofilecharts --set appimage=joey00243/vprofileapp
 
-
-token : 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
 
